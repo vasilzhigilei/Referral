@@ -2,11 +2,26 @@ package main
 
 import (
 	"fmt"
+	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"net/http"
+	"os"
 )
 
+var cache redis.Conn
+
+func initCache(){
+	conn, err := redis.DialURL(os.Getenv("REDIS_URL"))
+	checkErr(err) // check error
+
+	// assign connection to package level 'cache' variable
+	cache = conn
+}
+
 func main() {
+	var err error // declare error variable err to avoid :=
+	initCache() // initialize redis cache for session/user pairs
+
 	// Declare a new router
 	r := mux.NewRouter()
 
@@ -14,7 +29,7 @@ func main() {
 	r.HandleFunc("/", indexHandler).Methods("GET")
 
 	// referral variable paths
-	r.HandleFunc("/referral/{service}", serviceHandler)
+	r.HandleFunc("/referrals/{service}", serviceHandler)
 
 	// file directory for file serving
 	staticFileDirectory := http.Dir("./static/")
@@ -34,5 +49,5 @@ func indexHandler(w http.ResponseWriter, r *http.Request){
 func serviceHandler(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Category: %v\n", vars["category"])
+	fmt.Fprintf(w, "Service: %v\n", vars["service"])
 }
