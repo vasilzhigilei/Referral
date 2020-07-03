@@ -51,3 +51,13 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Service: %v\n", vars["service"])
 }
+
+
+/**
+Check error func
+*/
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
