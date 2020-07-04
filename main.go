@@ -54,7 +54,7 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request){
-
+	// main page, meant to open categories, featured categories
 }
 
 func serviceHandler(w http.ResponseWriter, r *http.Request){
