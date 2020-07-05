@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
+	"html/template"
 	"net/http"
 	"os"
 )
@@ -26,9 +27,17 @@ func initDB() *Database {
 	return db
 }
 
+var indexTemplate *template.Template
+
+func initTemplates() {
+	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
+}
+
 func main() {
-	var err error // declare error variable err to avoid :=
+	//var err error // declare error variable err to avoid :=
 	initCache() // initialize redis cache for session/user pairs
+
+	initTemplates()
 
 	// Declare a new router
 	r := mux.NewRouter()
@@ -55,6 +64,7 @@ func main() {
 
 func indexHandler(w http.ResponseWriter, r *http.Request){
 	// main page, meant to open categories, featured categories
+	indexTemplate.Execute(w, "")
 }
 
 func serviceHandler(w http.ResponseWriter, r *http.Request){
