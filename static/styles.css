@@ -11,6 +11,7 @@
     border-radius: 5px;
     padding: 10px;
     background: #66d9ff;
+    border-color: #00c2fa;
 }
 
 .featured-section {
@@ -18,8 +19,13 @@
     border-radius: 5px;
     padding: 10px;
     background: #ecbf48;
+    border-color: #e5a701;
 }
 
 .padding {
     padding: 7px;
+}
+
+.center {
+    margin: auto;
 }
