@@ -5,6 +5,7 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
+	"image/color"
 	"net/http"
 	"os"
 )
@@ -31,6 +32,13 @@ var indexTemplate *template.Template
 
 func initTemplates() {
 	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
+}
+
+type Service struct {
+	image string
+	background color.RGBA
+	backgroundAlt color.RGBA
+	description string
 }
 
 func main() {
