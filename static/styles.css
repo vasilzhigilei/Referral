@@ -29,3 +29,11 @@
 .center {
     margin: auto;
 }
+
+.menuitem {
+    display: inline-block;
+}
+
+.nomargin {
+    margin: 0 !important;
+}
