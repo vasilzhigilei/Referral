@@ -27,7 +27,20 @@ body {
     border-color: #e3c91d;
 }
 
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    z-index: 1;
+    transition: .5s ease;
+}
+
 .service {
+    position: relative;
     border-style: solid;
     border-radius: 5px;
     padding: 5px;
@@ -36,9 +49,8 @@ body {
     height: 15vh;
 }
 
-.service:hover {
-    transition: .5s ease-in-out;
-    opacity: 0.8;
+.service:hover .service{
+
 }
 
 .service > img {
