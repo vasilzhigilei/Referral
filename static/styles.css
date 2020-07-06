@@ -22,6 +22,7 @@ body {
     border-style: solid;
     border-radius: 5px;
     padding: 8px;
+    margin: 0px;
     background: rgba(255, 231, 75, 0.2);
     border-color: #e3c91d;
 }
@@ -33,6 +34,16 @@ body {
     overflow: auto;
     text-align: center;
     height: 15vh;
+}
+
+.service:hover {
+    transition: .5s ease-in-out;
+    opacity: 0.8;
+}
+
+.service > img {
+    max-width: 70%;
+    max-height: 50%;
 }
 
 .service::-webkit-scrollbar-track{
