@@ -30,23 +30,26 @@ body {
     border-style: solid;
     border-radius: 5px;
     padding: 5px;
+    overflow: auto;
+    text-align: center;
+    height: 15vh;
 }
 
 .service::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 2px;
+    border-radius: 10px;
     background-color: #F5F5F5;
 }
 
 .service::-webkit-scrollbar
 {
-    width: 8px;
+    width: 7px;
     background-color: #F5F5F5;
 }
 
 .service::-webkit-scrollbar-thumb
 {
-    border-radius: 2px;
+    border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
 }
