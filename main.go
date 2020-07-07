@@ -22,9 +22,10 @@ func initCache(){
 }
 
 func initDB() *Database {
-	db = NewDatabase(os.Getenv("DATABASE_URL"))
-	// err := db.GenerateTable()
-	//checkErr(err)
+	//db = NewDatabase(os.Getenv("DATABASE_URL"))
+	db = NewDatabase("postgres://postgres:password@localhost:5433/referralshare")
+	err := db.GenerateTable()
+	checkErr(err)
 	return db
 }
 
@@ -44,6 +45,7 @@ type Service struct {
 func main() {
 	//var err error // declare error variable err to avoid :=
 	initCache() // initialize redis cache for session/user pairs
+	db = initDB() // initialize postgres database
 
 	initTemplates()
 

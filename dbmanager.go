@@ -43,6 +43,6 @@ uber text NOT NULL DEFAULT '',
 uber_clicks integer NOT NULL DEFAULT 0
 );
 `
-	_, err := d.conn.Exec(context.Background(), execstring)
+	_, err := d.pool.Exec(context.Background(), execstring)
 	return err
 }
