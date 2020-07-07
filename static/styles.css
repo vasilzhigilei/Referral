@@ -50,6 +50,7 @@ body {
     overflow: auto;
     text-align: center;
     height: 15vh;
+    width: 100%;
 }
 
 .service:hover .service{
