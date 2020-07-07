@@ -99,8 +99,10 @@ body {
     margin: auto;
 }
 
-.menuitem {
+.sidenav {
+    width:30%;
     display: inline-block;
+    white-space:nowrap;
 }
 
 .nomargin {
