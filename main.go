@@ -4,8 +4,10 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
+	"math/rand"
 	"net/http"
 	"os"
+	"time"
 )
 
 var cache redis.Conn
@@ -64,6 +66,10 @@ type User struct {
 
 func main() {
 	//var err error // declare error variable err to avoid :=
+
+	// initialize random generator
+	rand.Seed(time.Now().Unix())
+
 	//initCache() // initialize redis cache for session/user pairs
 	db = initDB() // initialize postgres database
 	initURLLists() // initialize urllists map from postgres database on startup
@@ -99,10 +105,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func serviceHandler(w http.ResponseWriter, r *http.Request){
-	// meant to open new tab with referral link. Isn't a separate page, more of an API call
+	// Opens random referral link for given service
 	vars := mux.Vars(r)
-	http.Redirect(w, r, urllists[vars["service"]][0], http.StatusTemporaryRedirect)
+	listoflinks := urllists[vars["service"]] // get array of referral links for a given service
 
+	// randomly select a link from the listoflinks string array
+	http.Redirect(w, r, listoflinks[rand.Intn(len(listoflinks))], http.StatusTemporaryRedirect)
 }
 
 /*func categoryHandler(w http.ResponseWriter, r *http.Request){
