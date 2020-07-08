@@ -44,7 +44,7 @@ type Service struct {
 
 func main() {
 	//var err error // declare error variable err to avoid :=
-	initCache() // initialize redis cache for session/user pairs
+	//initCache() // initialize redis cache for session/user pairs
 	db = initDB() // initialize postgres database
 
 	initTemplates()

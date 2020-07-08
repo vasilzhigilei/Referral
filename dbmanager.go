@@ -46,3 +46,10 @@ uber_clicks integer NOT NULL DEFAULT 0
 	_, err := d.pool.Exec(context.Background(), execstring)
 	return err
 }
+
+func (d *Database) GetAllService(service string) []string {
+	querystring := "SELECT '" + service + "' FROM userdata WHERE '" + service + "' != '';"
+	rows, err := d.conn.Query(context.Background(), querystring)
+	checkErr(err)
+	return rows
+}
