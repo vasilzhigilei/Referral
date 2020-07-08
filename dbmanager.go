@@ -59,3 +59,7 @@ func (d *Database) GetServiceURLs(service string) []string {
 	}
 	return returnvalue
 }
+
+func (d *Database) GetUser(email string) {
+	
+}

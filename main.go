@@ -31,7 +31,7 @@ func initDB() *Database {
 var urllists = make(map[string][]string)
 
 func initURLLists() {
-	services := []string{"sofi-money", "sofi-invest", "robinhood", "amazon", "airbnb", "grubhub", "doordash", "uber"}
+	services := []string{"sofi_money", "sofi_invest", "robinhood", "amazon", "airbnb", "grubhub", "doordash", "uber"}
 	for i := 0; i < len(services); i++ {
 		urllists[services[i]] = db.GetServiceURLs(services[i])
 	}
@@ -41,6 +41,24 @@ var indexTemplate *template.Template
 
 func initTemplates() {
 	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
+}
+
+type User struct {
+	Email string
+	sofi_invest string
+	sofi_invest_clicks int
+	sofi_money string
+	sofi_money_clicks int
+	robihood string
+	robinhood_clicks int
+	airbnb string
+	airbnb_clicks int
+	grubhub string
+	grubhub_clicks int
+	doordash string
+	doordash_clicks int
+	uber string
+	uber_clicks int
 }
 
 func main() {
