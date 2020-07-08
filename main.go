@@ -45,12 +45,14 @@ func initTemplates() {
 
 type User struct {
 	Email string
-	sofi_invest string
-	sofi_invest_clicks int
 	sofi_money string
 	sofi_money_clicks int
+	sofi_invest string
+	sofi_invest_clicks int
 	robihood string
 	robinhood_clicks int
+	amazon string
+	amazon_clicks int
 	airbnb string
 	airbnb_clicks int
 	grubhub string

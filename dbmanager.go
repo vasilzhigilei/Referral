@@ -60,6 +60,18 @@ func (d *Database) GetServiceURLs(service string) []string {
 	return returnvalue
 }
 
-func (d *Database) GetUser(email string) {
-	
+func (d *Database) GetUser(email string) *User {
+	querystring := "SELECT * FROM userdata WHERE email = '" + email + "';"
+	rows, err := d.pool.Query(context.Background(), querystring)
+	checkErr(err)
+	user := User{
+		Email: email,
+	}
+	for rows.Next() {
+		err = rows.Scan(&user.sofi_money, &user.sofi_money_clicks,&user.sofi_invest, &user.sofi_invest_clicks,
+			&user.amazon, &user.amazon_clicks, &user.airbnb, &user.airbnb_clicks, &user.grubhub,
+			&user.grubhub_clicks, &user.doordash, &user.doordash_clicks, &user.uber, &user.uber_clicks)
+		checkErr(err)
+	}
+	return &user
 }
