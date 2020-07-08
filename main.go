@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
@@ -102,9 +101,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request){
 func serviceHandler(w http.ResponseWriter, r *http.Request){
 	// meant to open new tab with referral link. Isn't a separate page, more of an API call
 	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Service: %v\n", vars["service"])
-	fmt.Fprintf(w, "Contents: %v\n", urllists[vars["service"]])
+	http.Redirect(w, r, urllists[vars["service"]][0], http.StatusTemporaryRedirect)
 
 }
 
