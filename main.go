@@ -5,7 +5,6 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
-	"image/color"
 	"net/http"
 	"os"
 )
@@ -29,7 +28,7 @@ func initDB() *Database {
 	return db
 }
 
-var urllists map[string][]string
+var urllists = make(map[string][]string)
 
 func initURLLists() {
 	services := []string{"sofi-money", "sofi-invest", "robinhood", "amazon", "airbnb", "grubhub", "doordash", "uber"}
@@ -85,6 +84,7 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Service: %v\n", vars["service"])
+	fmt.Fprintf(w, "Contents: %v\n", urllists[vars["service"]])
 }
 
 func categoryHandler(w http.ResponseWriter, r *http.Request){

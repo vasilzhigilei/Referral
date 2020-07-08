@@ -49,7 +49,13 @@ uber_clicks integer NOT NULL DEFAULT 0
 
 func (d *Database) GetServiceURLs(service string) []string {
 	querystring := "SELECT '" + service + "' FROM userdata WHERE '" + service + "' != '';"
-	rows, err := d.conn.Query(context.Background(), querystring)
+	rows, err := d.pool.Query(context.Background(), querystring)
 	checkErr(err)
-	return rows
+	var returnvalue []string
+	for rows.Next() {
+		var temp string
+		err = rows.Scan(&temp)
+		returnvalue = append(returnvalue, temp)
+	}
+	return returnvalue
 }
