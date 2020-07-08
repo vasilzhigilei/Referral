@@ -29,23 +29,26 @@ func initDB() *Database {
 	return db
 }
 
+var urllists map[string][]string
+
+func initURLLists() {
+	services := []string{"sofi-money", "sofi-invest", "robinhood", "amazon", "airbnb", "grubhub", "doordash", "uber"}
+	for i := 0; i < len(services); i++ {
+		urllists[services[i]] = db.GetServiceURLs(services[i])
+	}
+}
+
 var indexTemplate *template.Template
 
 func initTemplates() {
 	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
 }
 
-type Service struct {
-	image string
-	background color.RGBA
-	backgroundAlt color.RGBA
-	description string
-}
-
 func main() {
 	//var err error // declare error variable err to avoid :=
 	//initCache() // initialize redis cache for session/user pairs
 	db = initDB() // initialize postgres database
+	initURLLists() // initialize urllists map from postgres database on startup
 
 	initTemplates()
 
