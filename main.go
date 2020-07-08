@@ -78,7 +78,7 @@ func main() {
 	r.HandleFunc("/", indexHandler).Methods("GET")
 
 	// categories variable paths
-	r.HandleFunc("/categories/{category}", categoryHandler)
+	//r.HandleFunc("/categories/{category}", categoryHandler)
 
 	// referral variable paths
 	r.HandleFunc("/referrals/{service}", serviceHandler)
@@ -105,14 +105,15 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Service: %v\n", vars["service"])
 	fmt.Fprintf(w, "Contents: %v\n", urllists[vars["service"]])
+
 }
 
-func categoryHandler(w http.ResponseWriter, r *http.Request){
+/*func categoryHandler(w http.ResponseWriter, r *http.Request){
 	// meant to route to a category page, listing relevant randomly generated links
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Category: %v\n", vars["category"])
-}
+}*/
 
 /**
 Check error func
