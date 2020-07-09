@@ -107,6 +107,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request){
 	indexTemplate.Execute(w, "")
 }
 
+func profileHandler(w http.ResponseWriter, r *http.Request){
+	// profile page, if not logged in, auto send to login, if logged in, serve profile template
+}
+
 func serviceHandler(w http.ResponseWriter, r *http.Request){
 	// Opens random referral link for given service
 	vars := mux.Vars(r)
