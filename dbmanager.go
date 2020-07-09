@@ -75,3 +75,11 @@ func (d *Database) GetUser(email string) *User {
 	}
 	return &user
 }
+
+/**
+Insert user, if conflict (user already exists), do nothing
+*/
+func (d *Database) InsertUser(email string) error {
+	_, err := d.pool.Exec(context.Background(), "INSERT INTO userdata values($1) ON CONFLICT DO NOTHING", email)
+	return err
+}
