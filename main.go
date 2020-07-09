@@ -88,6 +88,14 @@ func main() {
 	// categories variable paths
 	//r.HandleFunc("/categories/{category}", categoryHandler)
 
+	// profile page handler
+	r.HandleFunc("/profile", profileHandler)
+
+	// login/logout management
+	r.HandleFunc("/auth/login", loginHandler)
+	r.HandleFunc("/auth/callback", callbackHandler)
+	r.HandleFunc("/auth/logout", logoutHandler)
+
 	// referral variable paths
 	r.HandleFunc("/referrals/{service}", serviceHandler)
 
