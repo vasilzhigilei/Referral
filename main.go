@@ -2,11 +2,14 @@ package main
 
 import (
 	"encoding/base64"
+	"encoding/json"
+	"fmt"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
+	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -181,6 +184,44 @@ func logoutHandler(w http.ResponseWriter, r * http.Request) {
 	_, err = cache.Do("DEL", c.Value)
 	checkErr(err)
 	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+}
+
+/**
+Callback handler for login
+Redirected to by Google's authentication service
+Receives session ID and email address, sets session/email pair in cache,
+and adds user to Postgres user DB if user doesn't already exist
+Redirects to index.html
+*/
+func callbackHandler(w http.ResponseWriter, r *http.Request) {
+	code := r.FormValue("code")
+	token, _ := authconf.Exchange(oauth2.NoContext, code)
+
+	if !token.Valid(){
+		fmt.Fprintln(w, "Retrieved invalid token")
+	}
+
+	response, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
+	checkErr(err)
+
+	defer response.Body.Close()
+	contents, err := ioutil.ReadAll(response.Body)
+	checkErr(err)
+
+	var user *GoogleUser
+	err = json.Unmarshal(contents, &user)
+	checkErr(err)
+
+	state, err := r.Cookie("oauthstate")
+	checkErr(err)
+	_, err = cache.Do("SETEX", state.Value, 365 * 24 * 60 * 60, user.Email)
+	checkErr(err)
+
+	// insert user into postgresql, auto does check if already exists
+	err = db.InsertUser(user.Email)
+	checkErr(err)
+
+	http.Redirect(w, r, "/profile", http.StatusTemporaryRedirect)
 }
 
 /**
