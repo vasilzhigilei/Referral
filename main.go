@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/base64"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
@@ -113,12 +116,60 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	http.Redirect(w, r, listoflinks[rand.Intn(len(listoflinks))], http.StatusTemporaryRedirect)
 }
 
-/*func categoryHandler(w http.ResponseWriter, r *http.Request){
-	// meant to route to a category page, listing relevant randomly generated links
-	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Category: %v\n", vars["category"])
-}*/
+/**
+Struct to accept unmarshaling of Google user data
+Can be expanded to accept a large variety of additional user information on Google login
+Currently only need email address
+*/
+type GoogleUser struct {
+	Email string `json:"email"`
+}
+
+// global authentication variable
+var authconf = &oauth2.Config {
+	RedirectURL: "http://localhost:8000/callback",
+	ClientID: os.Getenv("GOOGLE_CLIENT_ID_REFERRALSHARE"),
+	ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET_REFERRALSHARE"),
+	Scopes: []string{"https://www.googleapis.com/auth/userinfo.email"},
+	Endpoint: google.Endpoint,
+}
+
+/**
+Generates new session with 1 year expiration time
+*/
+func generateStateOauthCookie(w http.ResponseWriter) string {
+	var expiration = time.Now().Add(365 * 24 * time.Hour)
+
+	b := make([]byte, 16)
+	rand.Read(b)
+	state := base64.URLEncoding.EncodeToString(b)
+	cookie := http.Cookie{Name: "oauthstate", Value: state, Expires: expiration}
+	http.SetCookie(w, &cookie)
+
+	return state
+}
+
+/**
+Login handler
+Generates random session id, and then redirects client to Google's authentication service
+*/
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+	oauthStateString := generateStateOauthCookie(w)
+	url := authconf.AuthCodeURL(oauthStateString)
+	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+}
+
+/**
+Logout handler
+Handles user logout; Deletes session from Redis cache
+*/
+func logoutHandler(w http.ResponseWriter, r * http.Request) {
+	c, err := r.Cookie("oauthstate")
+	checkErr(err)
+	_, err = cache.Do("DEL", c.Value)
+	checkErr(err)
+	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+}
 
 /**
 Check error func
