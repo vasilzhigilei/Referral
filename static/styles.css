@@ -110,6 +110,28 @@ body {
     margin: 0 !important;
 }
 
+.featured-section-left {
+    padding: 0; padding-right: 7px;
+}
+
+.featured-section-right {
+    padding: 0; padding-left: 7px;
+}
+
+.padding-dynamic {
+    padding: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .featured-section-left, .featured-section-right {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .padding-dynamic {
+        padding: 7px;
+    }
+}
+
 #left{float:left;}
 #right{float:right;}
 #center{margin:0 auto;}
