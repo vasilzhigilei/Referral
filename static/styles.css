@@ -1,14 +1,15 @@
 body {
     font-family: 'Lexend Deca';
-    background-color: #fbf5e9;
-}
-
-.navbar {
-    background: #a3c8d6;
+    background-color: #f2f1ed;
 }
 
 .creamycolor {
-    background-color: #f3e1be;
+    background-color: #e1e6ea;
+}
+
+.darkercreamycolor {
+    background-color: #3f5a73;
+    color: whitesmoke;
 }
 
 .side-section {
