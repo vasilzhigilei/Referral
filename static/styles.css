@@ -100,12 +100,6 @@ body {
     margin: auto;
 }
 
-.sidenav {
-    width:30%;
-    display: inline-block;
-    white-space:nowrap;
-}
-
 .nomargin {
     margin: 0 !important;
 }
