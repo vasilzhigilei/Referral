@@ -78,7 +78,7 @@ func main() {
 	// initialize random generator
 	rand.Seed(time.Now().Unix())
 
-	//initCache() // initialize redis cache for session/user pairs
+	initCache() // initialize redis cache for session/user pairs
 	db = initDB() // initialize postgres database
 	initURLLists() // initialize urllists map from postgres database on startup
 
@@ -128,7 +128,7 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 		// For any other type of error, return a bad request status
 		if err == http.ErrNoCookie {
 			// If the cookie is not set, send to login page
-			http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+			http.Redirect(w, r, "/auth/login", http.StatusTemporaryRedirect)
 			return
 		}
 		w.WriteHeader(http.StatusBadRequest)
@@ -138,8 +138,9 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 	response, err := cache.Do("GET", c.Value)
 	checkErr(err)
 	if response == nil {
+		fmt.Println("response nil")
 		// if session doesn't exist in cache, send to login page
-		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, "/auth/login", http.StatusTemporaryRedirect)
 		return
 	}else {
 		fmt.Println(fmt.Sprintf("%s", response), "has loaded index.html")
@@ -168,7 +169,7 @@ type GoogleUser struct {
 
 // global authentication variable
 var authconf = &oauth2.Config {
-	RedirectURL: "http://localhost:8000/callback",
+	RedirectURL: "http://localhost:8000/auth/callback",
 	ClientID: os.Getenv("GOOGLE_CLIENT_ID_REFERRALSHARE"),
 	ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET_REFERRALSHARE"),
 	Scopes: []string{"https://www.googleapis.com/auth/userinfo.email"},
@@ -184,7 +185,7 @@ func generateStateOauthCookie(w http.ResponseWriter) string {
 	b := make([]byte, 16)
 	rand.Read(b)
 	state := base64.URLEncoding.EncodeToString(b)
-	cookie := http.Cookie{Name: "oauthstate", Value: state, Expires: expiration}
+	cookie := http.Cookie{Name: "oauthstate", Value: state, Path: "/", Expires: expiration}
 	http.SetCookie(w, &cookie)
 
 	return state
