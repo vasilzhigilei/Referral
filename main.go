@@ -45,9 +45,11 @@ func initURLLists() {
 }
 
 var indexTemplate *template.Template
+var profileTemplate *template.Template
 
 func initTemplates() {
 	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
+	profileTemplate = template.Must(template.ParseFiles("templates/profile.html"))
 }
 
 type User struct {
@@ -120,6 +122,30 @@ func indexHandler(w http.ResponseWriter, r *http.Request){
 
 func profileHandler(w http.ResponseWriter, r *http.Request){
 	// profile page, if not logged in, auto send to login, if logged in, serve profile template
+	c, err := r.Cookie("oauthstate")
+	if err != nil {
+		// If the session token is not present in cache, set to not logged in
+		// For any other type of error, return a bad request status
+		if err == http.ErrNoCookie {
+			// If the cookie is not set, send to login page
+			http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	response, err := cache.Do("GET", c.Value)
+	checkErr(err)
+	if response == nil {
+		// if session doesn't exist in cache, send to login page
+		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+		return
+	}else {
+		fmt.Println(fmt.Sprintf("%s", response), "has loaded index.html")
+		user := db.GetUser(fmt.Sprintf("%s", response))
+		profileTemplate.Execute(w, user)
+	}
 }
 
 func serviceHandler(w http.ResponseWriter, r *http.Request){

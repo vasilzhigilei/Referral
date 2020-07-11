@@ -1,13 +1,13 @@
 body {
     font-family: 'Lexend Deca';
-    background-color: #f2f1ed;
+    background-color: #e9ecef;
 }
 
-.creamycolor {
+.darklight {
     background-color: #e1e6ea;
 }
 
-.darkercreamycolor {
+.darkblue {
     background-color: #3f5a73;
     color: whitesmoke;
 }
@@ -103,6 +103,10 @@ body {
 
 .nomargin {
     margin: 0 !important;
+}
+
+.margin{
+    margin: 7px;
 }
 
 .featured-section-left {
