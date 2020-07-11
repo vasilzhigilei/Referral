@@ -1,1 +1,4 @@
+# IDE folder
 .idea/
+# redis file
+dump.rdb
