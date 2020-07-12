@@ -50,30 +50,31 @@
     <br>
     <div class="row">
         <div class="col-sm-12 padding-extra rounded bg-light">
+            <form></form>
             <form id="analyzeform" action="/loglifts">
-                <p class="h3">Log lifts</p>
+                <p class="h3">Links</p>
                 <hr/>
-                <div class="row mb-3 inputblock" id="Personal"> <!-- WEIGHT AGE -->
+                <div class="row mb-3 inputblock" id="1"> <!-- SoFi Invest BEGIN -->
                     <div class="col-sm-4 col-md-2">
-                        <p class="h5 textright shiftdown">You</p>
+                        <p class="h5 textright shiftdown">SoFi Invest</p>
                     </div>
                     <div class="col-sm-4 col-md-3">
                         <div class="input-group">
-                            <input id="u-weight" type="text" class="form-control" placeholder="Weight" value="123" aria-describedby="u-weight">
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="u-weight">lbs</span>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">URL</span>
                             </div>
+                            <input id="sofi_invest" type="text" class="form-control" placeholder="Referral Link" value="{{if ne .Sofi_invest 0.0 }}{{ .Sofi_invest }}{{ end }}" aria-describedby="d12">
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-3">
                         <div class="input-group">
-                            <input id="u-age" type="text" class="form-control" placeholder="Age" value="123" aria-describedby="u-age">
+                            <input id="zzzz" type="text" class="form-control" placeholder="0" value="{{if ne .Sofi_invest_clicks 0}}{{ .Sofi_invest_clicks }}{{ end }}" aria-describedby="22">
                             <div class="input-group-append">
-                                <span class="input-group-text" id="u-age">Years</span>
+                                <span class="input-group-text">Clicks</span>
                             </div>
                         </div>
                     </div>
-                </div> <!-- / weight/age row -->
+                </div> <!-- SoFi Invest END -->
                 <hr/>
                 <div class="row mb-3 inputblock" id="Deadlift"> <!-- DEADLIFT -->
                     <div class="col-sm-4 col-md-2">
