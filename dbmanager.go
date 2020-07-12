@@ -66,9 +66,9 @@ func (d *Database) GetUser(email string) *User {
 	checkErr(err)
 	user := User{}
 	for rows.Next() {
-		err = rows.Scan(&user.Email, &user.sofi_money, &user.sofi_money_clicks, &user.robihood, &user.robinhood_clicks,
-			&user.sofi_invest, &user.sofi_invest_clicks, &user.amazon, &user.amazon_clicks, &user.airbnb, &user.airbnb_clicks, &user.grubhub,
-			&user.grubhub_clicks, &user.doordash, &user.doordash_clicks, &user.uber, &user.uber_clicks)
+		err = rows.Scan(&user.Email, &user.Sofi_money, &user.Sofi_money_clicks, &user.Sofi_invest, &user.Sofi_invest_clicks,
+			&user.Robihood, &user.Robinhood_clicks, &user.Amazon, &user.Amazon_clicks, &user.Airbnb, &user.Airbnb_clicks, &user.Grubhub,
+			&user.Grubhub_clicks, &user.Doordash, &user.Doordash_clicks, &user.Uber, &user.Uber_clicks)
 		checkErr(err)
 	}
 	return &user

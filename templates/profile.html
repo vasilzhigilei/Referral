@@ -55,20 +55,20 @@
                 <p class="h3">Links</p>
                 <hr/>
                 <div class="row mb-3 inputblock" id="1"> <!-- SoFi Invest BEGIN -->
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-md-3">
                         <p class="h5 textright shiftdown">SoFi Invest</p>
                     </div>
-                    <div class="col-sm-4 col-md-3">
+                    <div class="col-md-5">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">URL</span>
                             </div>
-                            <input id="sofi_invest" type="text" class="form-control" placeholder="Referral Link" value="{{if ne .Sofi_invest 0.0 }}{{ .Sofi_invest }}{{ end }}" aria-describedby="d12">
+                            <input id="sofi_invest" type="text" class="form-control" placeholder="Referral Link" value="{{ .Sofi_invest }}">
                         </div>
                     </div>
-                    <div class="col-sm-4 col-md-3">
+                    <div class="col-md-3">
                         <div class="input-group">
-                            <input id="zzzz" type="text" class="form-control" placeholder="0" value="{{if ne .Sofi_invest_clicks 0}}{{ .Sofi_invest_clicks }}{{ end }}" aria-describedby="22">
+                            <input disabled type="text" class="form-control" placeholder="0" value="{{ .Sofi_invest_clicks }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">Clicks</span>
                             </div>

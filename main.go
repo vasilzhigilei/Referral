@@ -54,22 +54,22 @@ func initTemplates() {
 
 type User struct {
 	Email string
-	sofi_money string
-	sofi_money_clicks int
-	sofi_invest string
-	sofi_invest_clicks int
-	robihood string
-	robinhood_clicks int
-	amazon string
-	amazon_clicks int
-	airbnb string
-	airbnb_clicks int
-	grubhub string
-	grubhub_clicks int
-	doordash string
-	doordash_clicks int
-	uber string
-	uber_clicks int
+	Sofi_money string
+	Sofi_money_clicks int
+	Sofi_invest string
+	Sofi_invest_clicks int
+	Robihood string
+	Robinhood_clicks int
+	Amazon string
+	Amazon_clicks int
+	Airbnb string
+	Airbnb_clicks int
+	Grubhub string
+	Grubhub_clicks int
+	Doordash string
+	Doordash_clicks int
+	Uber string
+	Uber_clicks int
 }
 
 func main() {
@@ -144,6 +144,7 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 	}else {
 		fmt.Println(fmt.Sprintf("%s", response), "has loaded profile.html")
 		user := db.GetUser(fmt.Sprintf("%s", response))
+		fmt.Println(user.Sofi_invest)
 		profileTemplate.Execute(w, user)
 	}
 }
