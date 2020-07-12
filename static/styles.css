@@ -97,6 +97,14 @@ body {
     padding: 7px;
 }
 
+.padding-extra {
+    padding: 15px;
+}
+
+.rounded {
+    border-radius: 7px;
+}
+
 .center {
     margin: auto;
 }
@@ -119,6 +127,14 @@ body {
 
 .padding-dynamic {
     padding: 0;
+}
+
+.textright {
+    text-align: right;
+}
+
+.shiftdown {
+    margin-top: 6px;
 }
 
 @media only screen and (max-width: 767px) {

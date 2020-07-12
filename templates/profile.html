@@ -46,6 +46,67 @@
         <a class="btn btn-outline-danger pull-right" role="button" href="/auth/logout" style="float: right;">Logout</a>
     </div>
 </div>
+<div id="maincontent" class="container">
+    <br>
+    <div class="row">
+        <div class="col-sm-12 padding-extra rounded bg-light">
+            <form id="analyzeform" action="/loglifts">
+                <p class="h3">Log lifts</p>
+                <hr/>
+                <div class="row mb-3 inputblock" id="Personal"> <!-- WEIGHT AGE -->
+                    <div class="col-sm-4 col-md-2">
+                        <p class="h5 textright shiftdown">You</p>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <div class="input-group">
+                            <input id="u-weight" type="text" class="form-control" placeholder="Weight" value="123" aria-describedby="u-weight">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="u-weight">lbs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <div class="input-group">
+                            <input id="u-age" type="text" class="form-control" placeholder="Age" value="123" aria-describedby="u-age">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="u-age">Years</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- / weight/age row -->
+                <hr/>
+                <div class="row mb-3 inputblock" id="Deadlift"> <!-- DEADLIFT -->
+                    <div class="col-sm-4 col-md-2">
+                        <p class="h5 textright shiftdown">Deadlift</p>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <div class="input-group">
+                            <input id="dl-weight" type="text" class="form-control" placeholder="Weight" value="Thing" aria-describedby="dl-weight">
+                            <div class="input-group-append">
+                                <span class="input-group-text">lbs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <div class="input-group">
+                            <input id="dl-reps" type="text" class="form-control" placeholder="Reps" value="1" aria-describedby="dl-reps">
+                            <div class="input-group-append">
+                                <span class="input-group-text">Reps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- / deadlift weight/reps row -->
+                <hr/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" onclick="clicked='analyze'" class="btn btn-primary btn-lg bg-darkblue">Analyze</button>
+                    </div>
+                </div> <!-- / submit row -->
+            </form>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

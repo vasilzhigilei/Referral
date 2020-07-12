@@ -138,12 +138,11 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 	response, err := cache.Do("GET", c.Value)
 	checkErr(err)
 	if response == nil {
-		fmt.Println("response nil")
 		// if session doesn't exist in cache, send to login page
 		http.Redirect(w, r, "/auth/login", http.StatusTemporaryRedirect)
 		return
 	}else {
-		fmt.Println(fmt.Sprintf("%s", response), "has loaded index.html")
+		fmt.Println(fmt.Sprintf("%s", response), "has loaded profile.html")
 		user := db.GetUser(fmt.Sprintf("%s", response))
 		profileTemplate.Execute(w, user)
 	}
