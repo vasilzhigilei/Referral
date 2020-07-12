@@ -144,7 +144,7 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 	}else {
 		fmt.Println(fmt.Sprintf("%s", response), "has loaded profile.html")
 		user := db.GetUser(fmt.Sprintf("%s", response))
-		fmt.Println(user.Sofi_invest)
+
 		profileTemplate.Execute(w, user)
 	}
 }
@@ -153,8 +153,7 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	// Opens random referral link for given service
 	vars := mux.Vars(r)
 	listoflinks := urllists[vars["service"]] // get array of referral links for a given service
-	fmt.Println(len(listoflinks))
-	fmt.Println(listoflinks)
+
 	// randomly select a link from the listoflinks string array
 	http.Redirect(w, r, listoflinks[rand.Intn(len(listoflinks))], http.StatusTemporaryRedirect)
 }
