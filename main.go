@@ -4,6 +4,7 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/gorilla/mux"
 	"html/template"
+	"image/color"
 	"math/rand"
 	"net/http"
 	"os"
@@ -64,6 +65,16 @@ type User struct {
 	Doordash_clicks int
 	Uber string
 	Uber_clicks int
+}
+
+type Service struct {
+	InternalName string
+	Image string
+	BackgroundColor color.RGBA
+	BorderColor color.RGBA
+	ExternalName string
+	Clicks int
+	Description string
 }
 
 func main() {
