@@ -24,23 +24,23 @@ Useful and convenient when deploying on a new system
 func (d *Database) GenerateTable() error {
 	execstring := `
 CREATE TABLE IF NOT EXISTS userdata (
-email text NOT NULL UNIQUE,
-sofi_money text NOT NULL DEFAULT '',
-sofi_money_clicks integer NOT NULL DEFAULT 0,
-sofi_invest text NOT NULL DEFAULT '',
-sofi_invest_clicks integer NOT NULL DEFAULT 0,
-robinhood text NOT NULL DEFAULT '',
-robinhood_clicks integer NOT NULL DEFAULT 0,
-amazon text NOT NULL DEFAULT '',
-amazon_clicks integer NOT NULL DEFAULT 0,
-airbnb text NOT NULL DEFAULT '',
-airbnb_clicks integer NOT NULL DEFAULT 0,
-grubhub text NOT NULL DEFAULT '',
-grubhub_clicks integer NOT NULL DEFAULT 0,
-doordash text NOT NULL DEFAULT '',
-doordash_clicks integer NOT NULL DEFAULT 0,
-uber text NOT NULL DEFAULT '',
-uber_clicks integer NOT NULL DEFAULT 0
+Email text NOT NULL UNIQUE,
+Sofi_money text NOT NULL DEFAULT '',
+Sofi_money_clicks integer NOT NULL DEFAULT 0,
+Sofi_invest text NOT NULL DEFAULT '',
+Sofi_invest_clicks integer NOT NULL DEFAULT 0,
+Robinhood text NOT NULL DEFAULT '',
+Robinhood_clicks integer NOT NULL DEFAULT 0,
+Amazon text NOT NULL DEFAULT '',
+Amazon_clicks integer NOT NULL DEFAULT 0,
+Airbnb text NOT NULL DEFAULT '',
+Airbnb_clicks integer NOT NULL DEFAULT 0,
+Grubhub text NOT NULL DEFAULT '',
+Grubhub_clicks integer NOT NULL DEFAULT 0,
+Doordash text NOT NULL DEFAULT '',
+Doordash_clicks integer NOT NULL DEFAULT 0,
+Uber text NOT NULL DEFAULT '',
+Uber_clicks integer NOT NULL DEFAULT 0
 );
 `
 	_, err := d.pool.Exec(context.Background(), execstring)
@@ -61,7 +61,7 @@ func (d *Database) GetServiceURLs(service string) []string {
 }
 
 func (d *Database) GetUser(email string) *User {
-	querystring := "SELECT * FROM userdata WHERE email = '" + email + "';"
+	querystring := "SELECT * FROM userdata WHERE Email = '" + email + "';"
 	rows, err := d.pool.Query(context.Background(), querystring)
 	checkErr(err)
 	user := User{}

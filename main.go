@@ -33,7 +33,7 @@ func initDB() *Database {
 var urllists = make(map[string][]string)
 
 func initURLLists() {
-	services := []string{"sofi_money", "sofi_invest", "robinhood", "amazon", "airbnb", "grubhub", "doordash", "uber"}
+	services := []string{"Sofi_money", "Sofi_invest", "Robinhood", "Amazon", "Airbnb", "Grubhub", "Doordash", "Uber"}
 	for i := 0; i < len(services); i++ {
 		urllists[services[i]] = db.GetServiceURLs(services[i])
 	}
