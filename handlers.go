@@ -75,22 +75,14 @@ func updateHandler(w http.ResponseWriter, r *http.Request){
 		r.ParseForm()
 		user := User{
 			Email:              fmt.Sprintf("%s", response),
-			Sofi_money:         "",
-			Sofi_money_clicks:  0,
-			Sofi_invest:        "",
-			Sofi_invest_clicks: 0,
-			Robihood:           "",
-			Robinhood_clicks:   0,
-			Amazon:             "",
-			Amazon_clicks:      0,
-			Airbnb:             "",
-			Airbnb_clicks:      0,
-			Grubhub:            "",
-			Grubhub_clicks:     0,
-			Doordash:           "",
-			Doordash_clicks:    0,
-			Uber:               "",
-			Uber_clicks:        0,
+			Sofi_money:         r.FormValue("Sofi_money"),
+			Sofi_invest:		r.FormValue("Sofi_invest"),
+			Robinhood:          r.FormValue("Robinhood"),
+			Amazon:             r.FormValue("Amazon"),
+			Airbnb:             r.FormValue("Airbnb"),
+			Grubhub:            r.FormValue("Grubhub"),
+			Doordash:           r.FormValue("Doordash"),
+			Uber:               r.FormValue("Uber"),
 		}
 		err = db.UpdateUser(&user)
 		checkErr(err)

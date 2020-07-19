@@ -53,7 +53,7 @@ type User struct {
 	Sofi_money_clicks int
 	Sofi_invest string
 	Sofi_invest_clicks int
-	Robihood string
+	Robinhood string
 	Robinhood_clicks int
 	Amazon string
 	Amazon_clicks int
