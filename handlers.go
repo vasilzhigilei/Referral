@@ -48,6 +48,13 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+func errorHandler(w http.ResponseWriter, r *http.Request, status int){
+	w.WriteHeader(status)
+	if status == http.StatusNotFound {
+		fmt.Fprint(w, "404 Not Found")
+	}
+}
+
 func serviceHandler(w http.ResponseWriter, r *http.Request){
 	// Opens random referral link for given service
 	vars := mux.Vars(r)
