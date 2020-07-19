@@ -6,7 +6,9 @@ $(function () {
             type: "POST",
             data: $('#profileform').serialize(),
             success: function (data) {
-                console.log("lifts logged")
+                $('#alertresult').html("<div class=\"alert alert-success\" role=\"alert\">\n" +
+                    "  Success! Profile updated.\n" +
+                    "</div>");
             },
             error: function (jXHR, textStatus, errorThrown) {
                 alert(errorThrown);
