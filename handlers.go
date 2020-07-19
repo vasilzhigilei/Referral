@@ -50,9 +50,7 @@ func profileHandler(w http.ResponseWriter, r *http.Request){
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int){
 	w.WriteHeader(status)
-	if status == http.StatusNotFound {
-		fmt.Fprint(w, "404 Not Found")
-	}
+	fmt.Fprint(w, status)
 }
 
 func serviceHandler(w http.ResponseWriter, r *http.Request){
@@ -60,6 +58,10 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	listoflinks := urllists[vars["service"]] // get array of referral links for a given service
 
+	if len(listoflinks) == 0 {
+		errorHandler(w, r, http.StatusNoContent)
+		return
+	}
 	// randomly select a link from the listoflinks string array
 	http.Redirect(w, r, listoflinks[rand.Intn(len(listoflinks))], http.StatusTemporaryRedirect)
 }
