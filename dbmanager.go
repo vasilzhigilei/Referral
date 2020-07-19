@@ -47,13 +47,13 @@ Uber_clicks integer NOT NULL DEFAULT 0
 	return err
 }
 
-func (d *Database) GetServiceURLs(service string) []string {
-	querystring := "SELECT " + service + " FROM userdata WHERE " + service + " != '';"
+func (d *Database) GetServiceURLs(service string) []EmailURLPair {
+	querystring := "SELECT email, " + service + " FROM userdata WHERE " + service + " != '';"
 	rows, err := d.pool.Query(context.Background(), querystring)
 	checkErr(err)
-	var returnvalue []string
+	var returnvalue []EmailURLPair
 	for rows.Next() {
-		var temp string
+		var temp EmailURLPair
 		err = rows.Scan(&temp)
 		returnvalue = append(returnvalue, temp)
 	}

@@ -77,6 +77,11 @@ type Service struct {
 	Description string
 }
 
+type EmailURLPair struct {
+	Email string
+	URL string
+}
+
 func main() {
 	//var err error // declare error variable err to avoid :=
 
