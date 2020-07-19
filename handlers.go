@@ -56,14 +56,14 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int){
 func serviceHandler(w http.ResponseWriter, r *http.Request){
 	// Opens random referral link for given service
 	vars := mux.Vars(r)
-	listoflinks := urllists[vars["service"]] // get array of referral links for a given service
+	listofpairs := urllists[vars["service"]] // get array of referral links for a given service
 
-	if len(listoflinks) == 0 {
+	if len(listofpairs) == 0 {
 		errorHandler(w, r, http.StatusNoContent)
 		return
 	}
 	// randomly select a link from the listoflinks string array
-	http.Redirect(w, r, listoflinks[rand.Intn(len(listoflinks))], http.StatusTemporaryRedirect)
+	http.Redirect(w, r, listofpairs[rand.Intn(len(listofpairs))].URL, http.StatusTemporaryRedirect)
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request){

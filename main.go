@@ -11,42 +11,6 @@ import (
 	"time"
 )
 
-var cache redis.Conn
-var db *Database
-
-func initCache(){
-	conn, err := redis.DialURL(os.Getenv("REDIS_URL"))
-	checkErr(err) // check error
-
-	// assign connection to package level 'cache' variable
-	cache = conn
-}
-
-func initDB() *Database {
-	//db = NewDatabase(os.Getenv("DATABASE_URL"))
-	db = NewDatabase("postgres://postgres:password@localhost:5433/referralshare")
-	err := db.GenerateTable()
-	checkErr(err)
-	return db
-}
-
-var urllists = make(map[string][]string)
-
-func initURLLists() {
-	services := []string{"Sofi_money", "Sofi_invest", "Robinhood", "Amazon", "Airbnb", "Grubhub", "Doordash", "Uber"}
-	for i := 0; i < len(services); i++ {
-		urllists[services[i]] = db.GetServiceURLs(services[i])
-	}
-}
-
-var indexTemplate *template.Template
-var profileTemplate *template.Template
-
-func initTemplates() {
-	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
-	profileTemplate = template.Must(template.ParseFiles("templates/profile.html"))
-}
-
 type User struct {
 	Email string
 	Sofi_money string
@@ -80,6 +44,42 @@ type Service struct {
 type EmailURLPair struct {
 	Email string
 	URL string
+}
+
+var cache redis.Conn
+var db *Database
+
+func initCache(){
+	conn, err := redis.DialURL(os.Getenv("REDIS_URL"))
+	checkErr(err) // check error
+
+	// assign connection to package level 'cache' variable
+	cache = conn
+}
+
+func initDB() *Database {
+	//db = NewDatabase(os.Getenv("DATABASE_URL"))
+	db = NewDatabase("postgres://postgres:password@localhost:5433/referralshare")
+	err := db.GenerateTable()
+	checkErr(err)
+	return db
+}
+
+var urllists = make(map[string][]EmailURLPair)
+
+func initURLLists() {
+	services := []string{"Sofi_money", "Sofi_invest", "Robinhood", "Amazon", "Airbnb", "Grubhub", "Doordash", "Uber"}
+	for i := 0; i < len(services); i++ {
+		urllists[services[i]] = db.GetServiceURLs(services[i])
+	}
+}
+
+var indexTemplate *template.Template
+var profileTemplate *template.Template
+
+func initTemplates() {
+	indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
+	profileTemplate = template.Must(template.ParseFiles("templates/profile.html"))
 }
 
 func main() {
