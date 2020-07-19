@@ -99,7 +99,9 @@ func main() {
 	//r.HandleFunc("/categories/{category}", categoryHandler)
 
 	// profile page handler
-	r.HandleFunc("/profile", profileHandler)
+	r.HandleFunc("/user/profile", profileHandler)
+	// update form handler
+	r.HandleFunc("/user/update", updateHandler)
 
 	// login/logout management
 	r.HandleFunc("/auth/login", loginHandler)

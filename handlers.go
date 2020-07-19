@@ -66,6 +66,37 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	http.Redirect(w, r, listoflinks[rand.Intn(len(listoflinks))], http.StatusTemporaryRedirect)
 }
 
+func updateHandler(w http.ResponseWriter, r *http.Request){
+	c, err := r.Cookie("oauthstate")
+	checkErr(err)
+	response, err := cache.Do("GET", c.Value)
+	checkErr(err)
+	if response != nil {
+		r.ParseForm()
+		user := User{
+			Email:              fmt.Sprintf("%s", response),
+			Sofi_money:         "",
+			Sofi_money_clicks:  0,
+			Sofi_invest:        "",
+			Sofi_invest_clicks: 0,
+			Robihood:           "",
+			Robinhood_clicks:   0,
+			Amazon:             "",
+			Amazon_clicks:      0,
+			Airbnb:             "",
+			Airbnb_clicks:      0,
+			Grubhub:            "",
+			Grubhub_clicks:     0,
+			Doordash:           "",
+			Doordash_clicks:    0,
+			Uber:               "",
+			Uber_clicks:        0,
+		}
+		err = db.UpdateUser(&user)
+		checkErr(err)
+	}
+}
+
 /**
 Struct to accept unmarshaling of Google user data
 Can be expanded to accept a large variety of additional user information on Google login
