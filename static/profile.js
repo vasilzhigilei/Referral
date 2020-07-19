@@ -1,10 +1,10 @@
 $(function () {
-    $('profileform').on('submit', function (e) {
+    $('#profileform').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: $(form).attr('action') || window.location.pathname,
+            url: "/updateuser",
             type: "POST",
-            data: $('profileform').serialize(),
+            data: $('#profileform').serialize(),
             success: function (data) {
                 console.log("lifts logged")
             },

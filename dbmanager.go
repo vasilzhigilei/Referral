@@ -67,11 +67,23 @@ func (d *Database) GetUser(email string) *User {
 	user := User{}
 	for rows.Next() {
 		err = rows.Scan(&user.Email, &user.Sofi_money, &user.Sofi_money_clicks, &user.Sofi_invest, &user.Sofi_invest_clicks,
-			&user.Robihood, &user.Robinhood_clicks, &user.Amazon, &user.Amazon_clicks, &user.Airbnb, &user.Airbnb_clicks, &user.Grubhub,
-			&user.Grubhub_clicks, &user.Doordash, &user.Doordash_clicks, &user.Uber, &user.Uber_clicks)
+			&user.Robinhood, &user.Robinhood_clicks, &user.Amazon, &user.Amazon_clicks, &user.Airbnb, &user.Airbnb_clicks,
+			&user.Grubhub, &user.Grubhub_clicks, &user.Doordash, &user.Doordash_clicks, &user.Uber, &user.Uber_clicks)
 		checkErr(err)
 	}
 	return &user
+}
+
+func (d *Database) UpdateUser(user *User) error {
+	execstring := `
+UPDATE userdata
+SET Sofi_money = $1, Sofi_invest = $2, Robinhood = $3, Amazon = $4, Airbnb = $5, Grubhub = $6, Doordash = $7, Uber = $8 
+WHERE email = $9;
+`
+	_, err := d.pool.Exec(context.Background(), execstring, user.Sofi_money, user.Sofi_invest, user.Robinhood,
+		user.Amazon, user.Airbnb, user.Grubhub, user.Doordash, user.Uber, user.Email)
+
+	return err
 }
 
 /**
