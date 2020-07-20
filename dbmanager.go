@@ -54,7 +54,7 @@ func (d *Database) GetServiceURLs(service string) []EmailURLPair {
 	var returnvalue []EmailURLPair
 	for rows.Next() {
 		var temp EmailURLPair
-		err = rows.Scan(&temp)
+		err = rows.Scan(&temp.Email, &temp.URL)
 		returnvalue = append(returnvalue, temp)
 	}
 	return returnvalue

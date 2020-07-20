@@ -11,7 +11,9 @@ $(function () {
                     "</div>");
             },
             error: function (jXHR, textStatus, errorThrown) {
-                alert(errorThrown);
+                $('#alertresult').html("<div class=\"alert alert-danger\" role=\"alert\">\n" +
+                    "  Failure! " + jXHR.responseText + "\n" +
+                    "</div>");
             }
         });
     });

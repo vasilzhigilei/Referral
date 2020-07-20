@@ -11,6 +11,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"regexp"
 	"time"
 )
 
@@ -59,11 +60,15 @@ func serviceHandler(w http.ResponseWriter, r *http.Request){
 	listofpairs := urllists[vars["service"]] // get array of referral links for a given service
 
 	if len(listofpairs) == 0 {
-		errorHandler(w, r, http.StatusNoContent)
+		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
+
+	randompair := listofpairs[rand.Intn(len(listofpairs))]
+
+
 	// randomly select a link from the listoflinks string array
-	http.Redirect(w, r, listofpairs[rand.Intn(len(listofpairs))].URL, http.StatusTemporaryRedirect)
+	http.Redirect(w, r, randompair.URL, http.StatusTemporaryRedirect)
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request){
@@ -84,6 +89,14 @@ func updateHandler(w http.ResponseWriter, r *http.Request){
 			Doordash:           r.FormValue("Doordash"),
 			Uber:               r.FormValue("Uber"),
 		}
+
+		found, err := regexp.MatchString("^(https:\\/\\/www\\.)?sofi\\.com\\/share\\/invest\\/[0-9]+(\\/)?$", user.Sofi_invest)
+		if !found{
+			user.Sofi_invest = ""
+			http.Error(w, "SoFi Invest URL invalid", http.StatusBadRequest)
+
+		}
+
 		err = db.UpdateUser(&user)
 		checkErr(err)
 	}
