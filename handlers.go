@@ -90,11 +90,17 @@ func updateHandler(w http.ResponseWriter, r *http.Request){
 			Uber:               r.FormValue("Uber"),
 		}
 
-		found, err := regexp.MatchString("^(https:\\/\\/www\\.)?sofi\\.com\\/share\\/invest\\/[0-9]+(\\/)?$", user.Sofi_invest)
+		found, err := regexp.MatchString("^$|(^(https:\\/\\/www\\.)?sofi\\.com\\/invite\\/money\\/\\?gcp=[0-9a-z-]+(\\/)?$)",
+			user.Sofi_money)
 		if !found{
-			user.Sofi_invest = ""
+			http.Error(w, "SoFi Money URL invalid", http.StatusBadRequest)
+			return
+		}
+		found, err = regexp.MatchString("^$|(^(https:\\/\\/www\\.)?sofi\\.com\\/share\\/invest\\/[0-9]+(\\/)?$)",
+			user.Sofi_invest)
+		if !found{
 			http.Error(w, "SoFi Invest URL invalid", http.StatusBadRequest)
-
+			return
 		}
 
 		err = db.UpdateUser(&user)
