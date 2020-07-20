@@ -102,6 +102,13 @@ func updateHandler(w http.ResponseWriter, r *http.Request){
 			http.Error(w, "SoFi Invest URL invalid", http.StatusBadRequest)
 			return
 		}
+		// https://www.grubhub.com/referral/727fe700-532d-11ea-89fc-95fb0cbb3c20
+		found, err = regexp.MatchString("^$|(^(https:\\/\\/www\\.)?grubhub\\.com\\/referral\\/[0-9a-z-]+(\\/)?$)",
+			user.Grubhub)
+		if !found{
+			http.Error(w, "Grubhub URL invalid", http.StatusBadRequest)
+			return
+		}
 
 		err = db.UpdateUser(&user)
 		checkErr(err)
